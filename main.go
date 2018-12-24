@@ -71,5 +71,5 @@ func httpGet() string {
 	}
 
 	log.Print(string(body))
-	return string(body)
+	return string(len(body))
 }
