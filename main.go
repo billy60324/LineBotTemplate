@@ -55,25 +55,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			case *linebot.LocationMessage:
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(bot.GetProfile(event.Source.UserID)+":"+message.Address)).Do(); err != nil {
 					log.Print(err)
+				}
 			}
 		}
 	}
 }
-
-/*
-func httpGet() string {
-	resp, err := http.Get("https://tw.yahoo.com/")
-	if err != nil {
-		// handle error
-	}
-
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		// handle error
-	}
-
-	log.Print(string(body))
-	return string(len(body))
-}
-*/
