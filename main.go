@@ -14,7 +14,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -50,14 +49,18 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.ID+":"+message.Text+httpGet())).Do(); err != nil {
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(bot.GetProfile(event.Source.UserID)+":"+message.Text)).Do(); err != nil {
 					log.Print(err)
 				}
+			case *linebot.LocationMessage:
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(bot.GetProfile(event.Source.UserID)+":"+message.Address)).Do(); err != nil {
+					log.Print(err)
 			}
 		}
 	}
 }
 
+/*
 func httpGet() string {
 	resp, err := http.Get("https://tw.yahoo.com/")
 	if err != nil {
@@ -73,3 +76,4 @@ func httpGet() string {
 	log.Print(string(body))
 	return string(len(body))
 }
+*/
