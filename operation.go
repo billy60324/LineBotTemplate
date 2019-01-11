@@ -32,11 +32,10 @@ func httpGet() string {
 
 func googleSearch(keyword string) string {
 	// URL https://www.google.com.tw/search?q=
-	// URL https://www.google.com/maps?q=24.773911999999999,121.00657699999999
-	html := "<body>	<div id=\"div1\">DIV1</div> <div class=\"name\">DIV2</div> <span>SPAN</span> </body>"
+	//html := "<body>	<div id=\"div1\">DIV1</div> <div class=\"name\">DIV2</div> <span>SPAN</span> </body>"
 	var answer string
-	//doc, err := goquery.NewDocument("https://www.google.com.tw/search?q=" + keyword)
-	doc, err := goquery.NewDocument(html)
+	doc, err := goquery.NewDocument("https://www.google.com.tw/search?q=" + keyword)
+	//doc, err := goquery.NewDocument(html)
 	log.Print("Google Search")
 	if err != nil {
 		log.Fatal(err)
