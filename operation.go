@@ -51,5 +51,5 @@ func googleSearch(keyword string) string {
 
 func googleMapSearch(longitude float64, latitude float64) string {
 	// URL https://www.google.com/maps?q=24.773911999999999,121.00657699999999
-	return "https://www.google.com/maps?q=" + strconv.FormatFloat(longitude, 'E', 30, 64) + "," + strconv.FormatFloat(latitude, 'E', -1, 64)
+	return "https://www.google.com/maps?q=" + strconv.FormatFloat(longitude, 'f', -1, 64) + "," + strconv.FormatFloat(latitude, 'f', -1, 64)
 }
