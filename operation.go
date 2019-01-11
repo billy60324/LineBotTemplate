@@ -33,6 +33,7 @@ func googleSearch(keyword string) string {
 	// URL https://www.google.com.tw/search?q=
 
 	doc, err := goquery.NewDocument("https://www.google.com.tw/search?q=" + keyword)
+	log.Print("Google Search")
 	if err != nil {
 		log.Fatal(err)
 	}
