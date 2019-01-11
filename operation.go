@@ -31,13 +31,15 @@ func httpGet() string {
 
 func googleSearch(keyword string) string {
 	// URL https://www.google.com.tw/search?q=
+	html := "<body>	<div id=\"div1\">DIV1</div> <div class=\"name\">DIV2</div> <span>SPAN</span> </body>"
 	var answer string
 	doc, err := goquery.NewDocument("https://www.google.com.tw/search?q=" + keyword)
+	doc, err = goquery.NewDocument(html)
 	log.Print("Google Search")
 	if err != nil {
 		log.Fatal(err)
 	}
-	doc.Find(".LC201b").Each(func(i int, s *goquery.Selection) {
+	doc.Find(".name").Each(func(i int, s *goquery.Selection) {
 		answer = s.Text()
 		log.Print(s.Text())
 	})
