@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -31,6 +32,7 @@ func httpGet() string {
 
 func googleSearch(keyword string) string {
 	// URL https://www.google.com.tw/search?q=
+	// URL https://www.google.com/maps?q=24.773911999999999,121.00657699999999
 	html := "<body>	<div id=\"div1\">DIV1</div> <div class=\"name\">DIV2</div> <span>SPAN</span> </body>"
 	var answer string
 	//doc, err := goquery.NewDocument("https://www.google.com.tw/search?q=" + keyword)
@@ -46,4 +48,9 @@ func googleSearch(keyword string) string {
 
 	return answer
 	//return "I get U"
+}
+
+func googleMapSearch(latitude float64, longitude float64) string {
+	// URL https://www.google.com/maps?q=24.773911999999999,121.00657699999999
+	return "https://www.google.com/maps?q=" + strconv.FormatFloat(latitude, 'E', -1, 64) + "," + strconv.FormatFloat(longitude, 'E', -1, 64)
 }
