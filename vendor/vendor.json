@@ -3,12 +3,6 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "Zub1oYfJmsNmArQ8n3p7t8T1yZg=",
-			"path": "github.com/PuerkitoBio/goquery",
-			"revision": "2d2796f41742ece03e8086188fa4db16a3a0b458",
-			"revisionTime": "2018-11-15T20:42:34Z"
-		},
-		{
 			"checksumSHA1": "0nIFK6e0pFLkwBgR5aVjMyGGFTY=",
 			"path": "github.com/line/line-bot-sdk-go/linebot",
 			"revision": "0dd6d85ecc4ffa3787cca17f3ac6db55bb78014b",
@@ -27,5 +21,5 @@
 			"revisionTime": "2016-11-09T21:27:32Z"
 		}
 	],
-	"rootPath": "github.com/kkdai/LineBotTemplate"
+	"rootPath": "linebot"
 }
