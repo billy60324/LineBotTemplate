@@ -5,7 +5,8 @@ import (
 	"log"
 	"net/http"
 	"strings"
-	//"github.com/PuerkitoBio/goquery"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
 func parseMessage(message string) []string {
@@ -30,14 +31,14 @@ func httpGet() string {
 
 func googleSearch(keyword string) string {
 	// URL https://www.google.com.tw/search?q=
-	/*
-		doc, err := goquery.NewDocument("https://www.google.com.tw/search?q=" + keyword)
-		if err != nil {
-			log.Fatal(err)
-		}
-		doc.Find(".LC201b").Each(func(i int, s *goquery.Selection) {
-			log.Print(s.Text())
-		})
-	*/
+
+	doc, err := goquery.NewDocument("https://www.google.com.tw/search?q=" + keyword)
+	if err != nil {
+		log.Fatal(err)
+	}
+	doc.Find(".LC201b").Each(func(i int, s *goquery.Selection) {
+		log.Print(s.Text())
+	})
+
 	return "I get U"
 }
