@@ -9,6 +9,12 @@
 			"revisionTime": "2018-11-15T20:42:34Z"
 		},
 		{
+			"checksumSHA1": "RIh1dcM7jKzdb/ZNYrKn9SaIaCw=",
+			"path": "github.com/andybalholm/cascadia",
+			"revision": "680b6a57bda4f657485ad44bdea42342ead737bc",
+			"revisionTime": "2018-10-12T15:44:24Z"
+		},
+		{
 			"checksumSHA1": "0nIFK6e0pFLkwBgR5aVjMyGGFTY=",
 			"path": "github.com/line/line-bot-sdk-go/linebot",
 			"revision": "0dd6d85ecc4ffa3787cca17f3ac6db55bb78014b",
@@ -25,6 +31,12 @@
 			"path": "golang.org/x/net/context/ctxhttp",
 			"revision": "9ef22118a4b25863aa94546daffbc0a18feaafb3",
 			"revisionTime": "2016-11-09T21:27:32Z"
+		},
+		{
+			"checksumSHA1": "UrM9Sbp5q0sBFxqb5iMhqiPpXII=",
+			"path": "golang.org/x/net/html",
+			"revision": "927f97764cc334a6575f4b7a1584a147864d5723",
+			"revisionTime": "2018-12-19T06:27:23Z"
 		}
 	],
 	"rootPath": "LineBotTemplate"
