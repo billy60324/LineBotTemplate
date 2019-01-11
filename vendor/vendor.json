@@ -37,6 +37,12 @@
 			"path": "golang.org/x/net/html",
 			"revision": "927f97764cc334a6575f4b7a1584a147864d5723",
 			"revisionTime": "2018-12-19T06:27:23Z"
+		},
+		{
+			"checksumSHA1": "XtSbs1gpyaEsIqf6VRhJsgOQe5U=",
+			"path": "golang.org/x/net/html/atom",
+			"revision": "927f97764cc334a6575f4b7a1584a147864d5723",
+			"revisionTime": "2018-12-19T06:27:23Z"
 		}
 	],
 	"rootPath": "LineBotTemplate"
