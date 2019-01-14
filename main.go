@@ -46,6 +46,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, event := range events {
+
 		profile, err := bot.GetProfile(event.Source.UserID).Do()
 		if err != nil {
 			log.Print(err)
@@ -57,7 +58,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 				if _, err = bot.LeaveRoom(event.Source.RoomID).Do(); err != nil {
 					log.Print(err)
 				}
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile.DisplayName+":"+message.Text)).Do(); err != nil {
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile.DisplayName+":"+botResponse(profile, message.Text))).Do(); err != nil {
 					log.Print(err)
 				}
 			case *linebot.LocationMessage:

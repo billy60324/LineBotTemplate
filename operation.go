@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/line/line-bot-sdk-go/linebot"
 )
 
 func parseMessage(message string) []string {
@@ -52,4 +53,8 @@ func googleSearch(keyword string) string {
 func googleMapSearch(latitude float64, longitude float64) string {
 	// URL https://www.google.com/maps?q=24.773911999999999,121.00657699999999
 	return "https://www.google.com/maps?q=" + strconv.FormatFloat(latitude, 'f', 30, 64) + "," + strconv.FormatFloat(longitude, 'f', 30, 64)
+}
+
+func botResponse(profile *linebot.UserProfileResponse, humanRequest string) string {
+	return profile.PictureURL
 }
