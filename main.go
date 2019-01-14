@@ -54,9 +54,10 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				bot.LeaveRoom(event.Source.RoomID)
+				if _, err = bot.LeaveRoom(event.Source.RoomID).Do(); err != nil {
+					log.Print(err)
+				}
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile.DisplayName+":"+message.Text)).Do(); err != nil {
-
 					log.Print(err)
 				}
 			case *linebot.LocationMessage:
