@@ -48,6 +48,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	for _, event := range events {
 
 		profile, err := bot.GetProfile(event.Source.UserID).Do()
+		profile, err = bot.GetGroupMemberProfile(event.Source.GroupID, event.Source.UserID).Do()
 		if err != nil {
 			log.Print(err)
 		}
