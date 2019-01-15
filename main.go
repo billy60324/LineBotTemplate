@@ -53,7 +53,6 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 			log.Print(err)
 		}
 		if event.Type == linebot.EventTypeMessage {
-
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
 				if _, err = bot.LeaveRoom(event.Source.RoomID).Do(); err != nil {
