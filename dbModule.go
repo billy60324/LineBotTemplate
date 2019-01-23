@@ -61,6 +61,7 @@ func getOperationCodeT(messageToken []string) string {
 			operationCode = keyword
 		}
 		print(opCodeDefine[0].opCode)
+		print(rows.Columns)
 	}
 	defer rows.Close()
 	return operationCode
