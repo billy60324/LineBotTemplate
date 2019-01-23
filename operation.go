@@ -57,19 +57,15 @@ func googleMapSearch(latitude float64, longitude float64) string {
 
 func botResponse(profile *linebot.UserProfileResponse, humanRequest string) string {
 	messageToken := parseMessage(humanRequest)
-	operationCode := analyzeMessageToken(messageToken)
+	operationCode := getOperationCode(messageToken)
+	//operationCode := analyzeMessageToken(messageToken)
 	print(operationCode)
-	return "getUserPhotoKeyword"
+	return string(operationCode)
 
 }
 
 func analyzeMessageToken(messageToken []string) int {
-	operationCode := -1
-	for tokenIndex:= 0; tokenIndex < len(messageToken); tokenIndex++ {
-		for opCodeIndex := 0; opCodeIndex < len(opCodeDefine); opCodeIndex++ {
-			if(messageToken[tokenIndex] == opCodeDefine[opCodeIndex].keyword)
-				operationCode = opCodeDefine[opCodeIndex].opCode
-		}
-	}
-	return 1123
+	var operationCode = -1
+
+	return operationCode
 }

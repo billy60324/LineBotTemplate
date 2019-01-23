@@ -10,3 +10,7 @@ var opCodeDefine = []operationCodeInfo{
 	{opCode: 2, keyword: "111"},
 	{opCode: 3, keyword: "111"},
 }
+
+type OperationCode int
+
+var OperationCodeGetPhoto = 1

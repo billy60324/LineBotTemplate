@@ -15,6 +15,12 @@
 			"revisionTime": "2018-10-12T15:44:24Z"
 		},
 		{
+			"checksumSHA1": "asksIwylfIjaYsF2nMY69jTyxC0=",
+			"path": "github.com/lib/pq",
+			"revision": "9eb73efc1fcc404148b56765b0d3f61d9a5ef8ee",
+			"revisionTime": "2018-10-16T16:26:27Z"
+		},
+		{
 			"checksumSHA1": "0nIFK6e0pFLkwBgR5aVjMyGGFTY=",
 			"path": "github.com/line/line-bot-sdk-go/linebot",
 			"revision": "0dd6d85ecc4ffa3787cca17f3ac6db55bb78014b",
