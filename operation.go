@@ -57,10 +57,12 @@ func googleMapSearch(latitude float64, longitude float64) string {
 
 func botResponse(profile *linebot.UserProfileResponse, humanRequest string) string {
 	messageToken := parseMessage(humanRequest)
-	operationCode := getOperationCode(messageToken)
+	operationCode := getOperationCodeT(messageToken)
+	//operationCode := getOperationCode(messageToken)
 	//operationCode := analyzeMessageToken(messageToken)
 	print(operationCode)
-	return strconv.Itoa(operationCode)
+	return operationCode
+	//return strconv.Itoa(operationCode)
 
 }
 

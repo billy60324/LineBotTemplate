@@ -40,3 +40,28 @@ func checkErr(err error) {
 		log.Print(err)
 	}
 }
+
+func getOperationCodeT(messageToken []string) string {
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	rows, err := db.Query("SELECT * FROM OperationList")
+	defer rows.Close()
+	checkErr(err)
+
+	operationCode := "11221"
+	for tokenIndex := 0; tokenIndex < len(messageToken); tokenIndex++ {
+		for rows.Next() {
+			var code int
+			var keyword string
+			err = rows.Scan(&code, &keyword)
+			println(messageToken[tokenIndex] + "===" + keyword)
+			checkErr(err)
+			operationCode = keyword
+		}
+		print(opCodeDefine[0].opCode)
+	}
+
+	return operationCode
+}
