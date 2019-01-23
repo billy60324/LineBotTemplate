@@ -60,7 +60,7 @@ func botResponse(profile *linebot.UserProfileResponse, humanRequest string) stri
 	operationCode := getOperationCode(messageToken)
 	//operationCode := analyzeMessageToken(messageToken)
 	print(operationCode)
-	return string(operationCode)
+	return strconv.Itoa(operationCode)
 
 }
 
