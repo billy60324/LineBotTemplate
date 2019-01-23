@@ -23,7 +23,7 @@ func getOperationCode(messageToken []string) int {
 			var code int
 			var keyword string
 			err = rows.Scan(&code, &keyword)
-			log.Print(messageToken[tokenIndex] + "===" + keyword)
+			println(messageToken[tokenIndex] + "===" + keyword)
 			checkErr(err)
 			if messageToken[tokenIndex] == keyword {
 				operationCode = code
