@@ -47,7 +47,7 @@ func getOperationCodeT(messageToken []string) string {
 		log.Fatal(err)
 	}
 	rows, err := db.Query("SELECT * FROM OperationList")
-	defer rows.Close()
+
 	checkErr(err)
 
 	operationCode := "11221"
@@ -62,6 +62,6 @@ func getOperationCodeT(messageToken []string) string {
 		}
 		print(opCodeDefine[0].opCode)
 	}
-
+	defer rows.Close()
 	return operationCode
 }
