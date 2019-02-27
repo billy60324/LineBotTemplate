@@ -47,20 +47,22 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 	for _, event := range events {
 
-		profile, err := bot.GetProfile(event.Source.UserID).Do()
+		profile, err := bot.GetGroupMemberProfile(event.Source.GroupID, event.Source.UserID).Do()
 		if err != nil {
-			log.Print(err)
-		}
-		profile, err = bot.GetGroupMemberProfile(event.Source.GroupID, event.Source.UserID).Do()
-		if err != nil {
-			log.Print(err)
+			log.Print("無法透過群組取得user資料，改以個人取得")
+			profile, err = bot.GetProfile(event.Source.UserID).Do()
+			if err != nil {
+				log.Print(err)
+			}
 		}
 		if event.Type == linebot.EventTypeMessage {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
+				/* 離開群聊(room)  群組(group)
 				if _, err = bot.LeaveRoom(event.Source.RoomID).Do(); err != nil {
 					log.Print(err)
 				}
+				*/
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile.DisplayName+":"+botResponse(profile, message.Text))).Do(); err != nil {
 					log.Print(err)
 				}
