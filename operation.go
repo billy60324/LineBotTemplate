@@ -67,16 +67,17 @@ func botResponse(profile *linebot.UserProfileResponse, humanRequest string) stri
 }
 
 func getOperationCode(messageToken []string) int {
-	operationCode := -1;	
+	operationCode := -1;
 	for tokenIndex := 0; tokenIndex < len(messageToken); tokenIndex++ {
 		for _, opCodeDefine := range OpCodeDefine {
 			if messageToken[tokenIndex] == opCodeDefine.keyword {
 				operationCode = opCodeDefine.opCode
-				break;
+				goto Response;
 			}
 		}
 	}
 
+Response:
 	return operationCode
 }
 
