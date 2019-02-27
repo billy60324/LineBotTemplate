@@ -27,7 +27,7 @@
 			"revisionTime": "2018-10-16T16:26:27Z"
 		},
 		{
-			"checksumSHA1": "0nIFK6e0pFLkwBgR5aVjMyGGFTY=",
+			"checksumSHA1": "tqe+MtBqC4lPZM2ebGujpTggUA4=",
 			"path": "github.com/line/line-bot-sdk-go/linebot",
 			"revision": "0dd6d85ecc4ffa3787cca17f3ac6db55bb78014b",
 			"revisionTime": "2018-08-09T03:25:42Z"
@@ -51,7 +51,7 @@
 			"revisionTime": "2018-12-19T06:27:23Z"
 		},
 		{
-			"checksumSHA1": "XtSbs1gpyaEsIqf6VRhJsgOQe5U=",
+			"checksumSHA1": "xwhqe/igHQrY3IhqDwzo6j7qpm8=",
 			"path": "golang.org/x/net/html/atom",
 			"revision": "927f97764cc334a6575f4b7a1584a147864d5723",
 			"revisionTime": "2018-12-19T06:27:23Z"
