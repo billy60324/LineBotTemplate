@@ -50,7 +50,8 @@ func getOperationCodeT(messageToken []string) string {
 
 	checkErr(err)
 
-	operationCode := "11221"
+	
+	operationCode := opCodeDefine[0].keyword
 	for tokenIndex := 0; tokenIndex < len(messageToken); tokenIndex++ {
 		for rows.Next() {
 			var code int
