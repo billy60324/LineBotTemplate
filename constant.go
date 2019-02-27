@@ -5,15 +5,15 @@ type OperationCodeInfo struct {
 	keyword string
 }
 
-var opCodeDefine = []OperationCodeInfo{
-	{opCode: 1, keyword: "照片"},
-	{opCode: 2, keyword: "111"},
-	{opCode: 3, keyword: "111"},
+var OpCodeDefine = []OperationCodeInfo{
+	{opCode: 1, keyword: "抽"},
+	{opCode: 2, keyword: "484"},
+	{opCode: 3, keyword: "是不是"},
 }
-/*
-var (
-	GetPhoto := &OperationCodeInfo{ opCode : 1, keyword : "抽" } ;
-)*/
+
+const (
+	GetPhoto = 1;
+)
 
 type OperationCode int
 
