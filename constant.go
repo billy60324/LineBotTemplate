@@ -10,6 +10,7 @@ var OpCodeDefine = []OperationCodeInfo{
 	{opCode: 1, keyword: "抽", complete: true},
 	{opCode: 2, keyword: "484", complete: false},
 	{opCode: 3, keyword: "是不是", complete: false},
+	{opCode: 4, keyword: "要不要", complete: false},
 }
 
 const (
