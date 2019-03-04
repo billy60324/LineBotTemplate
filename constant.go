@@ -3,12 +3,13 @@ package main
 type OperationCodeInfo struct {
 	opCode  int
 	keyword string
+	complete bool
 }
 
 var OpCodeDefine = []OperationCodeInfo{
-	{opCode: 1, keyword: "抽"},
-	{opCode: 2, keyword: "484"},
-	{opCode: 3, keyword: "是不是"},
+	{opCode: 1, keyword: "抽", complete: true},
+	{opCode: 2, keyword: "484", complete: false},
+	{opCode: 3, keyword: "是不是", complete: false},
 }
 
 const (

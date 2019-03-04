@@ -70,9 +70,16 @@ func getOperationCode(messageToken []string) int {
 	operationCode := -1;
 	for tokenIndex := 0; tokenIndex < len(messageToken); tokenIndex++ {
 		for _, opCodeDefine := range OpCodeDefine {
-			if messageToken[tokenIndex] == opCodeDefine.keyword {
-				operationCode = opCodeDefine.opCode
-				goto Response;
+			if opCodeDefine.complete {
+				if messageToken[tokenIndex] == opCodeDefine.keyword {
+					operationCode = opCodeDefine.opCode
+					goto Response;
+				}
+			} else {
+				if strings.Contains(messageToken[tokenIndex], opCodeDefine.keyword){
+					operationCode = opCodeDefine.opCode
+					goto Response;
+				}
 			}
 		}
 	}
