@@ -57,10 +57,11 @@ func googleMapSearch(latitude float64, longitude float64) string {
 
 func botResponse(profile *linebot.UserProfileResponse, humanRequest string) string {
 	messageToken := parseMessage(humanRequest)
-	operationCode, _ := getOperationCode(messageToken)
+	operationCode, location := getOperationCode(messageToken)
+
 	//operationCode := getOperationCode(messageToken)
 	//operationCode := analyzeMessageToken(messageToken)
-	print(operationCode)
+	print(operationCode + location)
 	return strconv.Itoa(operationCode)
 	//return strconv.Itoa(operationCode)
 
@@ -69,19 +70,24 @@ func botResponse(profile *linebot.UserProfileResponse, humanRequest string) stri
 func getOperationCode(messageToken []string) (int, int) {
 	operationCode := -1
 	location := -1
-	for tokenIndex := 0; tokenIndex < len(messageToken); tokenIndex++ {
+	messageLength := len(messageToken)
+	for tokenIndex := 0; tokenIndex < messageLength; tokenIndex++ {
 		for _, opCodeDefine := range OpCodeDefine {
 			if opCodeDefine.complete {
 				if messageToken[tokenIndex] == opCodeDefine.keyword {
-					operationCode = opCodeDefine.opCode
-					location = tokenIndex
-					goto Response
+					if checkSyntax(opCodeDefine.opCode, tokenIndex, messageLength) {
+						operationCode = opCodeDefine.opCode
+						location = tokenIndex
+						goto Response
+					}
 				}
 			} else {
 				if strings.Contains(messageToken[tokenIndex], opCodeDefine.keyword) {
-					operationCode = opCodeDefine.opCode
-					location = tokenIndex
-					goto Response
+					if checkSyntax(opCodeDefine.opCode, tokenIndex, messageLength) {
+						operationCode = opCodeDefine.opCode
+						location = tokenIndex
+						goto Response
+					}
 				}
 			}
 		}
@@ -95,4 +101,20 @@ func analyzeMessageToken(messageToken []string) int {
 	var operationCode = -1
 
 	return operationCode
+}
+
+func checkSyntax(operationCode int, location int, length int) bool {
+	for _, opCodeSyntaxDefine := range OpCodeSyntaxDefine {
+		if operationCode == opCodeSyntaxDefine.opCode {
+			if opCodeSyntaxDefine.location != NoNeed && opCodeSyntaxDefine.location != location {
+				return false
+			}
+
+			if opCodeSyntaxDefine.length != NoNeed && opCodeSyntaxDefine.length != length {
+				return false
+			}
+			return true
+		}
+	}
+	return false
 }
