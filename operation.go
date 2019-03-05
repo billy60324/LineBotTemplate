@@ -59,6 +59,10 @@ func botResponse(profile *linebot.UserProfileResponse, humanRequest string) stri
 	messageToken := parseMessage(humanRequest)
 	operationCode, location := getOperationCode(messageToken)
 
+	if operationCode == 99 {
+		_ = dbtesting(messageToken[1])
+	}
+
 	//operationCode := getOperationCode(messageToken)
 	//operationCode := analyzeMessageToken(messageToken)
 	print(operationCode + location)

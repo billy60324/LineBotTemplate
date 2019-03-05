@@ -1,9 +1,9 @@
 package main
 
 import (
-	//"database/sql"
+	"database/sql"
 	"log"
-	//"os"
+	"os"
 
 	_ "github.com/lib/pq"
 )
@@ -13,6 +13,19 @@ func checkErr(err error) {
 		log.Print(err)
 	}
 }
+
+func dbtesting(command string) int {
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	_, err = db.Exec(command)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return 666
+}
+
 /*
 func getOperationCode(messageToken []string) int {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
@@ -23,7 +36,7 @@ func getOperationCode(messageToken []string) int {
 
 	checkErr(err)
 
-	
+
 	operationCode := opCodeDefine[0].opCode
 	for tokenIndex := 0; tokenIndex < len(messageToken); tokenIndex++ {
 		for rows.Next() {

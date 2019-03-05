@@ -17,6 +17,7 @@ type OpCodeSyntaxInfo struct {
 // OpCodeDefine : define operation code and value
 var OpCodeDefine = []OperationCodeInfo{
 	{opCode: 1, keyword: "抽", complete: true},
+	{opCode: 99, keyword: "DB", complete: true}, // ------------------  testing for DB ------------------
 	{opCode: 201, keyword: "484", complete: false},
 	{opCode: 202, keyword: "是不是", complete: false},
 	{opCode: 203, keyword: "要不要", complete: false},
@@ -25,6 +26,7 @@ var OpCodeDefine = []OperationCodeInfo{
 // OpCodeSyntaxDefine : define operation syntax
 var OpCodeSyntaxDefine = []OpCodeSyntaxInfo{
 	{opCode: 1, location: 0, length: 1},
+	{opCode: 99, location: 0, length: 2},
 	{opCode: 201, location: NoNeed, length: NoNeed},
 	{opCode: 202, location: NoNeed, length: NoNeed},
 	{opCode: 203, location: NoNeed, length: NoNeed},
