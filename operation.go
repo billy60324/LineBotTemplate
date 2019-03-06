@@ -75,24 +75,19 @@ func getOperationCode(messageToken []string) (int, int) {
 	operationCode := -1
 	location := -1
 	messageLength := len(messageToken)
+	matchKeyword := false
 	for tokenIndex := 0; tokenIndex < messageLength; tokenIndex++ {
 		for _, opCodeDefine := range OpCodeDefine {
 			if opCodeDefine.complete {
-				if messageToken[tokenIndex] == opCodeDefine.keyword {
-					if checkSyntax(opCodeDefine.opCode, tokenIndex, messageLength) {
-						operationCode = opCodeDefine.opCode
-						location = tokenIndex
-						goto Response
-					}
-				}
+				matchKeyword = (messageToken[tokenIndex] == opCodeDefine.keyword)
 			} else {
-				if strings.Contains(messageToken[tokenIndex], opCodeDefine.keyword) {
-					if checkSyntax(opCodeDefine.opCode, tokenIndex, messageLength) {
-						operationCode = opCodeDefine.opCode
-						location = tokenIndex
-						goto Response
-					}
-				}
+				matchKeyword = strings.Contains(messageToken[tokenIndex], opCodeDefine.keyword)
+			}
+
+			if matchKeyword && checkSyntax(opCodeDefine.opCode, tokenIndex, messageLength) {
+				operationCode = opCodeDefine.opCode
+				location = tokenIndex
+				goto Response
 			}
 		}
 	}
