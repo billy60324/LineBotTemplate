@@ -60,7 +60,7 @@ func botResponse(profile *linebot.UserProfileResponse, humanRequest string) stri
 	operationCode, location := getOperationCode(messageToken)
 
 	if operationCode == 99 {
-
+		log.Fatal(strings.Replace(humanRequest, "DB", "", 1))
 		_ = dbtesting(strings.Replace(humanRequest, "DB", "", 1))
 	}
 
