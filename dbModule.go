@@ -15,6 +15,11 @@ func checkErr(err error) {
 	}
 }
 
+type User struct {
+	code    int
+	keyword string
+}
+
 func dbtesting(command string) string {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	checkErr(err)
@@ -28,15 +33,14 @@ func dbtesting(command string) string {
 	defer rows.Close()
 
 	var total string = ""
-	var opc int
-	var keyword string
+	user := User{}
 	for rows.Next() {
 
-		err = rows.Scan(&opc, &keyword)
+		err = rows.Scan(&user.code, &user.keyword)
 
 		checkErr(err)
 
-		total += strconv.Itoa(opc) + ":" + keyword + "\n"
+		total += strconv.Itoa(user.code) + ":" + user.keyword + "\n"
 	}
 
 	//_, err = db.Exec(command)
