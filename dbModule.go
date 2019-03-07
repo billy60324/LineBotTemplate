@@ -20,6 +20,7 @@ func dbtesting(command string) int {
 		log.Fatal(err)
 	}
 
+	log.Fatal(command)
 	_, err = db.Exec(command)
 	/*
 			_, err = db.Exec(`
