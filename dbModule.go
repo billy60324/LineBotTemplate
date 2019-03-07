@@ -26,7 +26,7 @@ func dbtesting(command string) string {
 	log.Print("connected")
 
 	rows, err := db.Query(
-		"SELECT code, keyword FROM public.operationlist",
+		"SELECT code, keyword FROM operationlist",
 	)
 
 	checkErr(err)
