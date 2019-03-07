@@ -62,7 +62,7 @@ func botResponse(profile *linebot.UserProfileResponse, humanRequest string) stri
 	if operationCode == 99 {
 		//log.Fatal(strings.Replace(humanRequest, "DB", "", 1))
 		answer := dbtesting("777")
-		log.Fatal(answer)
+		log.Print(answer)
 	}
 
 	//operationCode := getOperationCode(messageToken)
