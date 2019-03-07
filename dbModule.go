@@ -59,7 +59,7 @@ func dbtesting(command string) string {
 	if err != nil {
 		log.Print(err)
 	}
-	return "779"
+	return total
 }
 
 /*
