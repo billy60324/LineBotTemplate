@@ -54,6 +54,7 @@ func dbtesting(command string) string {
 	);
 	`)
 
+	db.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
