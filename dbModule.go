@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"os"
+	"strconv"
 
 	_ "github.com/lib/pq"
 )
@@ -14,14 +15,31 @@ func checkErr(err error) {
 	}
 }
 
-func dbtesting(command string) int {
+func dbtesting(command string) string {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
-	if err != nil {
-		log.Fatal(err)
+	checkErr(err)
+
+	rows, err := db.Query(
+		"SELECT code, keyword FROM operationlist",
+	)
+
+	checkErr(err)
+
+	defer rows.Close()
+
+	var total string = ""
+	var opc int
+	var keyword string
+	for rows.Next() {
+
+		err = rows.Scan(&opc, &keyword)
+
+		checkErr(err)
+
+		total += strconv.Itoa(opc) + ":" + keyword + "\n"
 	}
 
-	log.Fatal(command)
-	_, err = db.Exec(command)
+	//_, err = db.Exec(command)
 	/*
 			_, err = db.Exec(`
 		    CREATE TABLE IF NOT EXISTS users (
@@ -34,7 +52,7 @@ func dbtesting(command string) int {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return 666
+	return total
 }
 
 /*
