@@ -23,22 +23,24 @@ type User struct {
 func dbtesting(command string) string {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	checkErr(err)
+	log.Print("connected")
 
 	rows, err := db.Query(
 		"SELECT code, keyword FROM operationlist",
 	)
 
 	checkErr(err)
+	log.Print("already get query")
 
 	defer rows.Close()
 
 	var total string = ""
 	user := User{}
 	for rows.Next() {
-
+		log.Print("In for loop")
 		err = rows.Scan(&user.code, &user.keyword)
-
 		checkErr(err)
+		log.Print("scan success")
 
 		total += strconv.Itoa(user.code) + ":" + user.keyword + "\n"
 	}
