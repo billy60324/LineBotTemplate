@@ -19,13 +19,17 @@ func dbtesting(command string) int {
 	if err != nil {
 		log.Fatal(err)
 	}
-	_, err = db.Exec(`
-    CREATE TABLE IF NOT EXISTS users (
-      id       SERIAL,
-      username VARCHAR(64) NOT NULL UNIQUE,
-      CHECK (CHAR_LENGTH(TRIM(username)) > 0)
-    );
-  `)
+
+	_, err = db.Exec(command)
+	/*
+			_, err = db.Exec(`
+		    CREATE TABLE IF NOT EXISTS users (
+		      id       SERIAL,
+		      username VARCHAR(64) NOT NULL UNIQUE,
+		      CHECK (CHAR_LENGTH(TRIM(username)) > 0)
+		    );
+		  `)
+	*/
 	if err != nil {
 		log.Fatal(err)
 	}
