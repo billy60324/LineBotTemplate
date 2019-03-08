@@ -20,6 +20,32 @@ type User struct {
 	keyword string
 }
 
+func dbSearchLearnTable(messageToken []string) string {
+	response := ""
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	checkErr(err)
+	log.Print("DB connected")
+	rows, err := db.Query("SELECT keyword, response FROM learn")
+	checkErr(err)
+	log.Print("already get query")
+
+	defer rows.Close()
+	learnTable := LearnTable{}
+	for rows.Next() {
+		err = rows.Scan(&learnTable.Keyword, &learnTable.Response)
+		checkErr(err)
+
+		for tokenIndex := 0; tokenIndex < len(messageToken); tokenIndex++ {
+			if messageToken[tokenIndex] == learnTable.Keyword {
+				response = learnTable.Response
+				goto Response
+			}
+		}
+	}
+Response:
+	return response
+}
+
 func dbtesting(command string) string {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	checkErr(err)

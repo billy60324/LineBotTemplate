@@ -63,8 +63,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 					log.Print(err)
 				}
 				*/
-				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile.DisplayName+":"+botResponse(profile, message.Text))).Do(); err != nil {
+				response := botResponse(profile, message.Text)
+				if response == "" {
+					break
+				}
+				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile.DisplayName+":"+response)).Do(); err != nil {
 					log.Print(err)
+					break
 				}
 			case *linebot.LocationMessage:
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(profile.DisplayName+":"+googleMapSearch(message.Latitude, message.Longitude))).Do(); err != nil {

@@ -58,17 +58,20 @@ func googleMapSearch(latitude float64, longitude float64) string {
 func botResponse(profile *linebot.UserProfileResponse, humanRequest string) string {
 	messageToken := parseMessage(humanRequest)
 	operationCode, location := getOperationCode(messageToken)
-
+	response := ""
 	if operationCode == 99 {
 		//log.Fatal(strings.Replace(humanRequest, "DB", "", 1))
 		answer := dbtesting("777")
 		log.Print(answer)
 	}
 
+	if operationCode == -1 {
+		response = dbSearchLearnTable(messageToken)
+	}
 	//operationCode := getOperationCode(messageToken)
 	//operationCode := analyzeMessageToken(messageToken)
-	print(operationCode + location)
-	return strconv.Itoa(operationCode)
+	log.Print(strconv.Itoa(operationCode) + strconv.Itoa(location))
+	return response
 	//return strconv.Itoa(operationCode)
 
 }
