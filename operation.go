@@ -153,8 +153,9 @@ type operater interface {
 type findKeywordDetail struct {
 }
 
-func (*findKeywordDetail) operate([]string) string {
+func (*findKeywordDetail) operate(messageToken []string) string {
 	detial := ""
+	detial = dbSearchKeywordDetail(messageToken[1])
 	return detial
 }
 
