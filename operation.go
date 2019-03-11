@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/line/line-bot-sdk-go/linebot"
@@ -63,6 +64,9 @@ func botResponse(profile *linebot.UserProfileResponse, humanRequest string) stri
 	if operationCode == -1 {
 		response = dbSearchLearnTable(messageToken)
 	} else {
+		if operationCode == 2 {
+			messageToken = []string{messageToken[0], messageToken[1], messageToken[2], profile.DisplayName}
+		}
 		response = coreOperation(operationCode, messageToken)
 	}
 	//operationCode := getOperationCode(messageToken)
@@ -129,6 +133,10 @@ func coreOperation(opCode int, messageToken []string) string {
 
 func (*operateFactory) createOperate(operatename int) operater {
 	switch operatename {
+	case TeachKeyword:
+		return &teachKeyword{}
+	case ForgetKeyword:
+		return &teachKeyword{}
 	case WhatIs:
 		return &findKeywordDetail{}
 	case IsWhat:
@@ -150,6 +158,27 @@ type operater interface {
 	operate([]string) string
 }
 
+type teachKeyword struct {
+}
+
+func (*teachKeyword) operate(messageToken []string) string {
+	keyword := []string{messageToken[1]}
+	response := dbSearchLearnTable(keyword)
+	now := time.Now()
+	local, err := time.LoadLocation("Local")
+	if err != nil {
+		log.Print(err)
+	}
+
+	if response == "" {
+		now.In(local)
+	} else {
+		response = "我早就學會啦!"
+	}
+
+	return response
+}
+
 type findKeywordDetail struct {
 }
 
@@ -159,13 +188,15 @@ func (*findKeywordDetail) operate(messageToken []string) string {
 	if messageToken[0] == "什麼是" {
 		keyword = messageToken[1]
 	} else {
-		keyword = messageToken[2]
+		keyword = messageToken[0]
 	}
 
 	response, teacher, timestamp := dbSearchKeywordDetail(keyword)
 
 	if response != "" {
-		detail = keyword + "是" + response + "，" + teacher + "在" + strings.Replace(strings.Replace(timestamp, "T", " ", -1), "z", "", -1) + "教我的"
+		detail = keyword + "是" + response + "，" + teacher + "在" + strings.Replace(strings.Replace(timestamp, "T", " ", -1), "Z", "", -1) + "教我的"
+	} else {
+		detail = "我不知道" + keyword + "是什麼"
 	}
 	return detail
 }

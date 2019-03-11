@@ -65,6 +65,14 @@ Response:
 	return response
 }
 
+func dbInsertLearnTable(keyword string, response string, teacher string, timestamp string) {
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	checkErr(err)
+	result, err := db.Exec("INSERT INTO learn VALUES ($1, $2, $3, $4)", keyword, response, teacher, timestamp)
+	log.Print(result)
+	checkErr(err)
+}
+
 /*
 func dbtesting(command string) string {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
