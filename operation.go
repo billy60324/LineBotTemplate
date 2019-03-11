@@ -154,9 +154,9 @@ type findKeywordDetail struct {
 }
 
 func (*findKeywordDetail) operate(messageToken []string) string {
-	detial := ""
-	detial = dbSearchKeywordDetail(messageToken[1])
-	return detial
+	detail := ""
+	detail = dbSearchKeywordDetail(messageToken[1])
+	return detail
 }
 
 /* prototype

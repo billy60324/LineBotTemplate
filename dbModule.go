@@ -24,7 +24,7 @@ type User struct {
 func connectDBQuery(queryString string) *sql.Rows {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	checkErr(err)
-	log.Print("DB connected")
+	log.Print("DB connected, query:" + queryString)
 	rows, err := db.Query(queryString)
 	checkErr(err)
 	log.Print("get query Successed")
