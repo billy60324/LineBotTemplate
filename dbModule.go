@@ -33,7 +33,7 @@ func connectDBQuery(queryString string) *sql.Rows {
 
 func dbSearchKeywordDetail(keyword string) string {
 	response := ""
-	rows := connectDBQuery("SELECT response, teacher, timestamp FROM learn WHERE keyword=\"" + keyword + "\"")
+	rows := connectDBQuery("SELECT response, teacher, timestamp FROM learn WHERE keyword='" + keyword + "'")
 	defer rows.Close()
 	learnTable := LearnTable{}
 	for rows.Next() {
