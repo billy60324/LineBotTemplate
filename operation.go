@@ -155,10 +155,17 @@ type findKeywordDetail struct {
 
 func (*findKeywordDetail) operate(messageToken []string) string {
 	detail := ""
+	var keyword string
 	if messageToken[0] == "什麼是" {
-		detail = dbSearchKeywordDetail(messageToken[1])
+		keyword = messageToken[1]
 	} else {
-		detail = dbSearchKeywordDetail(messageToken[0])
+		keyword = messageToken[2]
+	}
+
+	response, teacher, timestamp := dbSearchKeywordDetail(keyword)
+
+	if response != "" {
+		detail = keyword + "是" + response + "，" + teacher + "在" + strings.Replace(strings.Replace(timestamp, "T", " ", -1), "z", "", -1) + "教我的"
 	}
 	return detail
 }

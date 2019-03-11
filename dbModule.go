@@ -31,18 +31,17 @@ func connectDBQuery(queryString string) *sql.Rows {
 	return rows
 }
 
-func dbSearchKeywordDetail(keyword string) string {
-	response := ""
+func dbSearchKeywordDetail(keyword string) (string, string, string) {
 	rows := connectDBQuery("SELECT response, teacher, timestamp FROM learn WHERE keyword='" + keyword + "'")
 	defer rows.Close()
 	learnTable := LearnTable{}
-	for rows.Next() {
-		err := rows.Scan(&learnTable.Response, &learnTable.Teacher, &learnTable.Timestamp)
-		checkErr(err)
-		response = keyword + "是" + learnTable.Response + "，" + learnTable.Teacher + "在" + learnTable.Timestamp + "教我的"
+	if rows != nil {
+		for rows.Next() {
+			err := rows.Scan(&learnTable.Response, &learnTable.Teacher, &learnTable.Timestamp)
+			checkErr(err)
+		}
 	}
-
-	return response
+	return learnTable.Response, learnTable.Teacher, learnTable.Timestamp
 }
 
 func dbSearchLearnTable(messageToken []string) string {
