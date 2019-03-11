@@ -163,6 +163,7 @@ type teachKeyword struct {
 
 func (*teachKeyword) operate(messageToken []string) string {
 	keyword := []string{messageToken[1]}
+	teacher := messageToken[3]
 	response := dbSearchLearnTable(keyword)
 	now := time.Now()
 	local, err := time.LoadLocation("Local")
@@ -171,7 +172,8 @@ func (*teachKeyword) operate(messageToken []string) string {
 	}
 
 	if response == "" {
-		now.In(local)
+		dbInsertLearnTable(keyword[0], response, teacher, now.In(local).Format("2006-01-02 15:04:05"))
+		response = "摁摁~原來如此~學到了呢!"
 	} else {
 		response = "我早就學會啦!"
 	}
