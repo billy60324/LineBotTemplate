@@ -39,7 +39,7 @@ func dbSearchKeywordDetail(keyword string) string {
 	for rows.Next() {
 		err := rows.Scan(&learnTable.Response, &learnTable.Teacher, &learnTable.Timestamp)
 		checkErr(err)
-		response = learnTable.Response + learnTable.Teacher + learnTable.Timestamp
+		response = keyword + "是" + learnTable.Response + "，" + learnTable.Teacher + "在" + learnTable.Timestamp + "教我的"
 	}
 
 	return response

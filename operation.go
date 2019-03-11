@@ -155,7 +155,11 @@ type findKeywordDetail struct {
 
 func (*findKeywordDetail) operate(messageToken []string) string {
 	detail := ""
-	detail = dbSearchKeywordDetail(messageToken[1])
+	if messageToken[0] == "什麼是" {
+		detail = dbSearchKeywordDetail(messageToken[1])
+	} else {
+		detail = dbSearchKeywordDetail(messageToken[0])
+	}
 	return detail
 }
 
