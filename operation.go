@@ -59,14 +59,11 @@ func botResponse(profile *linebot.UserProfileResponse, humanRequest string) stri
 	messageToken := parseMessage(humanRequest)
 	operationCode, location := getOperationCode(messageToken)
 	response := ""
-	if operationCode == 99 {
-		//log.Fatal(strings.Replace(humanRequest, "DB", "", 1))
-		answer := dbtesting("777")
-		log.Print(answer)
-	}
 
 	if operationCode == -1 {
 		response = dbSearchLearnTable(messageToken)
+	} else {
+		response = coreOperation(operationCode, messageToken)
 	}
 	//operationCode := getOperationCode(messageToken)
 	//operationCode := analyzeMessageToken(messageToken)
@@ -122,3 +119,57 @@ func checkSyntax(operationCode int, location int, length int) bool {
 	}
 	return false
 }
+
+//-------------------------------------------Simple Factory Pattern------------------------------------------------
+
+func coreOperation(opCode int, messageToken []string) string {
+	Operator := newOperateFactory().createOperate(opCode)
+	return Operator.operate(messageToken)
+}
+
+func (*operateFactory) createOperate(operatename int) operater {
+	switch operatename {
+	case WhatIs:
+		return &findKeywordDetail{}
+	case IsWhat:
+		return &findKeywordDetail{}
+	default:
+		//panic("无效运算符号")
+		return nil
+	}
+}
+
+type operateFactory struct {
+}
+
+func newOperateFactory() *operateFactory {
+	return &operateFactory{}
+}
+
+type operater interface {
+	operate([]string) string
+}
+
+type findKeywordDetail struct {
+}
+
+func (*findKeywordDetail) operate([]string) string {
+	detial := ""
+	return detial
+}
+
+/* prototype
+type addOperate struct {
+}
+
+func (*addOperate) operate([]string) string {
+	return rhs + lhs
+}
+
+type multipleOperate struct {
+}
+
+func (*multipleOperate) operate([]string) string {
+	return rhs * lhs
+}
+*/

@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"log"
 	"os"
-	"strconv"
 
 	_ "github.com/lib/pq"
 )
@@ -15,24 +14,31 @@ func checkErr(err error) {
 	}
 }
 
+/*
 type User struct {
 	code    int
 	keyword string
 }
+*/
 
-func dbSearchLearnTable(messageToken []string) string {
-	response := ""
+func connectDBQuery(queryString string) *sql.Rows {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	checkErr(err)
 	log.Print("DB connected")
-	rows, err := db.Query("SELECT keyword, response FROM learn")
+	rows, err := db.Query(queryString)
 	checkErr(err)
-	log.Print("already get query")
+	log.Print("get query Successed")
+	return rows
+}
 
+func dbSearchLearnTable(messageToken []string) string {
+	response := ""
+
+	rows := connectDBQuery("SELECT keyword, response FROM learn")
 	defer rows.Close()
 	learnTable := LearnTable{}
 	for rows.Next() {
-		err = rows.Scan(&learnTable.Keyword, &learnTable.Response)
+		err := rows.Scan(&learnTable.Keyword, &learnTable.Response)
 		checkErr(err)
 
 		for tokenIndex := 0; tokenIndex < len(messageToken); tokenIndex++ {
@@ -46,6 +52,7 @@ Response:
 	return response
 }
 
+/*
 func dbtesting(command string) string {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	checkErr(err)
@@ -72,7 +79,7 @@ func dbtesting(command string) string {
 	}
 
 	//_, err = db.Exec(command)
-	/*
+
 		_, err = db.Exec(`
 		CREATE TABLE IF NOT EXISTS users (
 			id       SERIAL,
@@ -80,13 +87,14 @@ func dbtesting(command string) string {
 			CHECK (CHAR_LENGTH(TRIM(username)) > 0)
 		);
 		`)
-	*/
+
 	db.Close()
 	if err != nil {
 		log.Print(err)
 	}
 	return total
 }
+*/
 
 /*
 func getOperationCode(messageToken []string) int {
