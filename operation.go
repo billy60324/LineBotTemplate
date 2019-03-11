@@ -166,13 +166,13 @@ func (*teachKeyword) operate(messageToken []string) string {
 	teacher := messageToken[3]
 	response := dbSearchLearnTable(keyword)
 	now := time.Now()
-	local, err := time.LoadLocation("Local")
+	local, err := time.LoadLocation("Asia/Taipei")
 	if err != nil {
 		log.Print(err)
 	}
 
 	if response == "" {
-		dbInsertLearnTable(keyword[0], response, teacher, now.In(local).Format("2006-01-02 15:04:05"))
+		dbInsertLearnTable(keyword[0], messageToken[2], teacher, now.In(local).Format("2006-01-02 15:04:05"))
 		response = "摁摁~原來如此~學到了呢!"
 	} else {
 		response = "我早就學會啦!"
