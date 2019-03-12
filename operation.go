@@ -136,7 +136,7 @@ func (*operateFactory) createOperate(operatename int) operater {
 	case TeachKeyword:
 		return &teachKeyword{}
 	case ForgetKeyword:
-		return &teachKeyword{}
+		return &forgetKeyword{}
 	case WhatIs:
 		return &findKeywordDetail{}
 	case IsWhat:
@@ -176,6 +176,23 @@ func (*teachKeyword) operate(messageToken []string) string {
 		response = "摁摁~原來如此~學到了呢!"
 	} else {
 		response = "我早就學會啦!"
+	}
+
+	return response
+}
+
+type forgetKeyword struct {
+}
+
+func (*forgetKeyword) operate(messageToken []string) string {
+	keyword := []string{messageToken[1]}
+	response := dbSearchLearnTable(keyword)
+
+	if response == "" {
+		response = keyword[0] + "是什麼??"
+	} else {
+		dbDeleteLearnTable(keyword[0])
+		response = "好啦!人家忘記了!"
 	}
 
 	return response

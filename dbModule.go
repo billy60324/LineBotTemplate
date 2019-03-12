@@ -73,6 +73,14 @@ func dbInsertLearnTable(keyword string, response string, teacher string, timesta
 	checkErr(err)
 }
 
+func dbDeleteLearnTable(keyword string) {
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	checkErr(err)
+	result, err := db.Exec("DELETE FROM learn WHERE keyword=$1", keyword)
+	log.Print(result)
+	checkErr(err)
+}
+
 /*
 func dbtesting(command string) string {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
