@@ -68,6 +68,7 @@ Response:
 
 func dbInsertLearnTable(keyword string, response string, teacher string, timestamp string) {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	defer db.Close()
 	checkErr(err)
 	result, err := db.Exec("INSERT INTO learn VALUES ($1, $2, $3, $4)", keyword, response, teacher, timestamp)
 	log.Print(result)
@@ -76,6 +77,7 @@ func dbInsertLearnTable(keyword string, response string, teacher string, timesta
 
 func dbDeleteLearnTable(keyword string) {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	defer db.Close()
 	checkErr(err)
 	result, err := db.Exec("DELETE FROM learn WHERE keyword=$1", keyword)
 	log.Print(result)
