@@ -53,4 +53,10 @@ const (
 	WhatIs = 4
 	// IsWhat : get detial information from keyword
 	IsWhat = 5
+	// NumberYesNo : random response yes or no
+	NumberYesNo = 201
+	// YesNo : random response yes or no
+	YesNo = 202
+	// WantOrNot : random response yes or no
+	WantOrNot = 203
 )

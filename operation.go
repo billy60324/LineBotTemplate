@@ -3,6 +3,7 @@ package main
 import (
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"strings"
@@ -141,6 +142,12 @@ func (*operateFactory) createOperate(operatename int) operater {
 		return &findKeywordDetail{}
 	case IsWhat:
 		return &findKeywordDetail{}
+	case NumberYesNo:
+		return &randomYesNo{}
+	case YesNo:
+		return &randomYesNo{}
+	case WantOrNot:
+		return &randomYesNo{}
 	default:
 		//panic("无效运算符号")
 		return nil
@@ -218,6 +225,42 @@ func (*findKeywordDetail) operate(messageToken []string) string {
 		detail = "我不知道" + keyword + "是什麼"
 	}
 	return detail
+}
+
+type randomYesNo struct {
+}
+
+func (*randomYesNo) operate(messageToken []string) string {
+	response := ""
+
+	for tokenIndex := 0; tokenIndex < len(messageToken); tokenIndex++ {
+		if strings.Contains(messageToken[tokenIndex], "484") {
+			if rand.Float32() < 0.5 {
+				response = "4"
+			} else {
+				response = "84"
+			}
+			goto Response
+		}
+		if strings.Contains(messageToken[tokenIndex], "是不是") {
+			if rand.Float32() < 0.5 {
+				response = "是"
+			} else {
+				response = "不是"
+			}
+			goto Response
+		}
+		if strings.Contains(messageToken[tokenIndex], "要不要") {
+			if rand.Float32() < 0.5 {
+				response = "要"
+			} else {
+				response = "不要"
+			}
+			goto Response
+		}
+	}
+Response:
+	return response
 }
 
 /* prototype
