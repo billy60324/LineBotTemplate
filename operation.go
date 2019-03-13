@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -246,8 +247,11 @@ func (*searchStock) operate(messageToken []string) string {
 	body, _ := ioutil.ReadAll(resp.Body)
 	apiResponse := string(body)
 	log.Print(apiResponse)
-	jsonStockMessage := apiResponse[strings.Index(apiResponse, "[") : strings.Index(apiResponse, "]")-1]
+	jsonStockMessage := apiResponse[strings.Index(apiResponse, "[")+1 : strings.Index(apiResponse, "]")]
 	log.Print(jsonStockMessage)
+	var stockInformation StockInformation
+	json.Unmarshal([]byte(jsonStockMessage), &stockInformation)
+	log.Print(stockInformation)
 	return response
 }
 
