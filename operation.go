@@ -249,9 +249,15 @@ func (*searchStock) operate(messageToken []string) string {
 	log.Print(apiResponse)
 	jsonStockMessage := apiResponse[strings.Index(apiResponse, "[")+1 : strings.Index(apiResponse, "]")]
 	log.Print(jsonStockMessage)
-	var stockInformation StockInformation
-	json.Unmarshal([]byte(jsonStockMessage), &stockInformation)
-	log.Print(stockInformation)
+	if jsonStockMessage == "" {
+		response = "找不到股票資訊"
+		log.Print("JSON Format is wrong!")
+	} else {
+		var stockInformation StockInformation
+		json.Unmarshal([]byte(jsonStockMessage), &stockInformation)
+		log.Print(stockInformation)
+		response = "***" + stockInformation.N + "***\n時間:" + stockInformation.T + "\n當盤成交價:" + stockInformation.Z + "\n今日最高:" + stockInformation.H + "\n今日最低:" + stockInformation.L + "\n開盤價:" + stockInformation.O + "\n昨收價:" + stockInformation.Y
+	}
 	return response
 }
 
