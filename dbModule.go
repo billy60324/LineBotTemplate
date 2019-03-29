@@ -110,6 +110,22 @@ func dbInsertUserStockTable(userid string, stockNumber string) {
 	checkErr(err)
 }
 
+func dbGetFollowStock(userid string) string {
+	query := "SELECT followstock FROM userstock WHERE userid='$1'"
+	query = strings.Replace(query, "$1", userid, 1)
+	rows := connectDBQuery(query)
+	followstock := ""
+
+	defer rows.Close()
+	if rows != nil {
+		for rows.Next() {
+			err := rows.Scan(&followstock)
+			checkErr(err)
+		}
+	}
+	return followstock
+}
+
 /*
 func dbtesting(command string) string {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))

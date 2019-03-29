@@ -301,7 +301,7 @@ func (*setFollowStock) operate(messageToken []string) string {
 	} else {
 		//search user
 		if dbUserExist("userstock", messageToken[2]) {
-
+			response = dbGetFollowStock(messageToken[2])
 		} else {
 			dbInsertUserStockTable(messageToken[2], messageToken[1])
 			response = "摁哼~插入了!"
