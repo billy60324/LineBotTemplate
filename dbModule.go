@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"os"
+	"strings"
 
 	_ "github.com/lib/pq"
 )
@@ -80,6 +81,31 @@ func dbDeleteLearnTable(keyword string) {
 	defer db.Close()
 	checkErr(err)
 	result, err := db.Exec("DELETE FROM learn WHERE keyword=$1", keyword)
+	log.Print(result)
+	checkErr(err)
+}
+
+func dbUserExist(tableName string, userid string) bool {
+	query := "SELECT * FROM $1 WHERE userid='$2'"
+	query = strings.Replace(query, "$1", tableName, 1)
+	query = strings.Replace(query, "$2", userid, 1)
+	rows := connectDBQuery(query)
+
+	defer rows.Close()
+	if rows != nil {
+		for rows.Next() {
+			return true
+		}
+	}
+
+	return false
+}
+
+func dbInsertUserStockTable(userid string, stockNumber string) {
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	defer db.Close()
+	checkErr(err)
+	result, err := db.Exec("INSERT INTO userstock VALUES ($1, $2)", userid, stockNumber+",")
 	log.Print(result)
 	checkErr(err)
 }
