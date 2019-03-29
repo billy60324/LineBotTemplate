@@ -22,6 +22,8 @@ var OpCodeDefine = []OperationCodeInfo{
 	{opCode: 4, keyword: "什麼是", complete: true},
 	{opCode: 5, keyword: "是什麼", complete: true},
 	{opCode: 6, keyword: "#", complete: true},
+	{opCode: 7, keyword: "股票", complete: true},
+	{opCode: 8, keyword: "股票", complete: true},
 	{opCode: 99, keyword: "DB", complete: true}, // ------------------  testing for DB ------------------
 	{opCode: 201, keyword: "484", complete: false},
 	{opCode: 202, keyword: "是不是", complete: false},
@@ -36,6 +38,8 @@ var OpCodeSyntaxDefine = []OpCodeSyntaxInfo{
 	{opCode: 4, location: 0, length: 2},
 	{opCode: 5, location: 1, length: 2},
 	{opCode: 6, location: 0, length: 2},
+	{opCode: 7, location: 0, length: 1},
+	{opCode: 8, location: 0, length: 2},
 	{opCode: 99, location: 0, length: 2},
 	{opCode: 201, location: NoNeed, length: NoNeed},
 	{opCode: 202, location: NoNeed, length: NoNeed},
@@ -57,6 +61,10 @@ const (
 	IsWhat = 5
 	// SearchStock : get stock information
 	SearchStock = 6
+	// GetFollowStock : get following stock by usetID
+	GetFollowStock = 7
+	// SetFollowStock : set following stock by userID
+	SetFollowStock = 8
 	// NumberYesNo : random response yes or no
 	NumberYesNo = 201
 	// YesNo : random response yes or no

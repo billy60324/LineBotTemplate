@@ -66,8 +66,12 @@ func botResponse(profile *linebot.UserProfileResponse, humanRequest string) stri
 	if operationCode == -1 {
 		response = dbSearchLearnTable(messageToken)
 	} else {
-		if operationCode == 2 {
+		if operationCode == 2 { // 學習 : 附加使用者名稱
 			messageToken = []string{messageToken[0], messageToken[1], messageToken[2], profile.DisplayName}
+		} else if operationCode == 7 { // 股票
+			messageToken = []string{messageToken[0], profile.UserID}
+		} else if operationCode == 8 { // 股票 2867
+			messageToken = []string{messageToken[0], messageToken[1], profile.UserID}
 		}
 		response = coreOperation(operationCode, messageToken)
 	}
@@ -145,6 +149,10 @@ func (*operateFactory) createOperate(operatename int) operater {
 		return &findKeywordDetail{}
 	case SearchStock:
 		return &searchStock{}
+	case GetFollowStock:
+		return &getFollowStock{}
+	case SetFollowStock:
+		return &setFollowStock{}
 	case NumberYesNo:
 		return &randomYesNo{}
 	case YesNo:
@@ -234,6 +242,71 @@ type searchStock struct {
 }
 
 func (*searchStock) operate(messageToken []string) string {
+	response := ""
+	/*
+		stockNumber := messageToken[1]
+		url := "http://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_$1.tw&json=1&delay=0"
+		url = strings.Replace(url, "$1", stockNumber, 1)
+		resp, error := http.Get(url)
+		if error != nil {
+			log.Print(error)
+		}
+
+		defer resp.Body.Close()
+		body, _ := ioutil.ReadAll(resp.Body)
+		apiResponse := string(body)
+		log.Print(apiResponse)
+	*/
+	// jsonStockMessage := apiResponse[strings.Index(apiResponse, "[")+1 : strings.Index(apiResponse, "]")]
+	jsonStockMessage := httpSearchStock(messageToken[1])
+	log.Print(jsonStockMessage)
+	if jsonStockMessage == "" {
+		response = "找不到股票資訊"
+		log.Print("JSON Format is wrong!")
+	} else {
+		var stockInformation StockInformation
+		json.Unmarshal([]byte(jsonStockMessage), &stockInformation)
+		log.Print(stockInformation)
+		response = "***" + stockInformation.N + "***\n時間:" + stockInformation.T + "\n當盤成交價:" + stockInformation.Z + "\n今日最高:" + stockInformation.H + "\n今日最低:" + stockInformation.L + "\n開盤價:" + stockInformation.O + "\n昨收價:" + stockInformation.Y
+	}
+	return response
+}
+
+type getFollowStock struct {
+}
+
+func (*getFollowStock) operate(messageToken []string) string {
+	response := ""
+	stockNumber := messageToken[1]
+	url := "http://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_$1.tw&json=1&delay=0"
+	url = strings.Replace(url, "$1", stockNumber, 1)
+	resp, error := http.Get(url)
+	if error != nil {
+		log.Print(error)
+	}
+
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	apiResponse := string(body)
+	log.Print(apiResponse)
+	jsonStockMessage := apiResponse[strings.Index(apiResponse, "[")+1 : strings.Index(apiResponse, "]")]
+	log.Print(jsonStockMessage)
+	if jsonStockMessage == "" {
+		response = "找不到股票資訊"
+		log.Print("JSON Format is wrong!")
+	} else {
+		var stockInformation StockInformation
+		json.Unmarshal([]byte(jsonStockMessage), &stockInformation)
+		log.Print(stockInformation)
+		response = "***" + stockInformation.N + "***\n時間:" + stockInformation.T + "\n當盤成交價:" + stockInformation.Z + "\n今日最高:" + stockInformation.H + "\n今日最低:" + stockInformation.L + "\n開盤價:" + stockInformation.O + "\n昨收價:" + stockInformation.Y
+	}
+	return response
+}
+
+type setFollowStock struct {
+}
+
+func (*setFollowStock) operate(messageToken []string) string {
 	response := ""
 	stockNumber := messageToken[1]
 	url := "http://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_$1.tw&json=1&delay=0"
