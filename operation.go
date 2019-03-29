@@ -300,7 +300,7 @@ func (*setFollowStock) operate(messageToken []string) string {
 		log.Print("JSON Format is wrong!")
 	} else {
 		//search user
-		if dbUserExist() {
+		if dbUserExist("userstock", messageToken[2]) {
 
 		} else {
 			dbInsertUserStockTable(messageToken[2], messageToken[1])
