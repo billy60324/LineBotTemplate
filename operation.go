@@ -301,6 +301,7 @@ func (*setFollowStock) operate(messageToken []string) string {
 	} else {
 		//search user
 		if dbUserExist("userstock", messageToken[2]) {
+			//  TODO  check repeat stock
 			followStock := dbGetFollowStock(messageToken[2]) + messageToken[1] + ","
 			log.Print("Followed Stock:" + followStock)
 			dbUpdateUserStockTable(messageToken[2], followStock)
