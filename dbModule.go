@@ -148,6 +148,7 @@ func dbStockExist(userid string, stockNumber string) bool {
 			checkErr(err)
 		}
 	}
+	log.Print("Follow Stock on DB:" + followStock)
 	strings.Replace(followStock, ",", " ", -1)
 	stockArray := strings.Split(followStock, " ")
 	for i := 0; i < len(stockArray); i++ {
