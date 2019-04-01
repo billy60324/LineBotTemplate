@@ -72,6 +72,8 @@ func botResponse(profile *linebot.UserProfileResponse, humanRequest string) stri
 			messageToken = []string{messageToken[0], profile.UserID}
 		} else if operationCode == 8 { // 股票 2867
 			messageToken = []string{messageToken[0], messageToken[1], profile.UserID}
+		} else if operationCode == 8 { // 股票 2867 刪除
+			messageToken = []string{messageToken[0], messageToken[1], messageToken[2], profile.UserID}
 		}
 		response = coreOperation(operationCode, messageToken)
 	}
@@ -153,6 +155,8 @@ func (*operateFactory) createOperate(operatename int) operater {
 		return &getFollowStock{}
 	case SetFollowStock:
 		return &setFollowStock{}
+	case DeleteFollowStock:
+		return &deleteFollowStock{}
 	case NumberYesNo:
 		return &randomYesNo{}
 	case YesNo:
@@ -299,6 +303,25 @@ func (*setFollowStock) operate(messageToken []string) string {
 			dbInsertUserStockTable(messageToken[2], messageToken[1])
 			response = "嘿嘿嘿~第一次插入齁!"
 		}
+	}
+	return response
+}
+
+type deleteFollowStock struct {
+}
+
+func (*deleteFollowStock) operate(messageToken []string) string {
+	response := ""
+	if messageToken[2] == "刪除" {
+		if dbStockExist(messageToken[3], messageToken[1]) {
+			followStock := strings.Replace(dbGetFollowStock(messageToken[2]), messageToken[1]+",", "", 1)
+			dbUpdateUserStockTable(messageToken[2], followStock)
+			response = "已取消追蹤囉!"
+		} else {
+			response = "你根本沒追蹤這個股票R...=="
+		}
+	} else {
+		response = "你是想用刪除指令嗎??[股票 '股票代號' 刪除]"
 	}
 	return response
 }
