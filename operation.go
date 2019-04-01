@@ -15,7 +15,7 @@ import (
 )
 
 func parseMessage(message string) []string {
-	return strings.Split(message, " ")
+	return strings.Fields(message)
 }
 
 func httpGet() string {
@@ -299,17 +299,19 @@ func (*setFollowStock) operate(messageToken []string) string {
 		response = "找不到該股票"
 		log.Print("JSON Format is wrong!")
 	} else {
-		//search user
 		if dbUserExist("userstock", messageToken[2]) {
-			//  TODO  check repeat stock
-			followStock := dbGetFollowStock(messageToken[2]) + messageToken[1] + ","
-			log.Print("Followed Stock:" + followStock)
-			dbUpdateUserStockTable(messageToken[2], followStock)
+			if dbStockExist(messageToken[2], messageToken[1]) {
+				response = "你已經追蹤過這個股票惹拉!"
+			} else {
+				followStock := dbGetFollowStock(messageToken[2]) + messageToken[1] + ","
+				log.Print("Followed Stock:" + followStock)
+				dbUpdateUserStockTable(messageToken[2], followStock)
+				response = "摁哼~插入了!"
+			}
 		} else {
 			dbInsertUserStockTable(messageToken[2], messageToken[1])
-			response = "摁哼~插入了!"
+			response = "嘿嘿嘿~第一次插入齁!"
 		}
-		//add stock info
 	}
 	return response
 }

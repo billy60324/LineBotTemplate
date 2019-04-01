@@ -135,6 +135,30 @@ func dbGetFollowStock(userid string) string {
 	return followstock
 }
 
+func dbStockExist(userid string, stockNumber string) bool {
+	query := "SELECT followstock FROM userstock WHERE userid='$1'"
+	query = strings.Replace(query, "$1", userid, 1)
+	rows := connectDBQuery(query)
+	followStock := ""
+
+	defer rows.Close()
+	if rows != nil {
+		for rows.Next() {
+			err := rows.Scan(&followStock)
+			checkErr(err)
+		}
+	}
+	strings.Replace(followStock, ",", " ", -1)
+	stockArray := strings.Split(followStock, " ")
+	for i := 0; i < len(stockArray); i++ {
+		if followStock == stockNumber {
+			return true
+		}
+	}
+
+	return false
+}
+
 /*
 func dbtesting(command string) string {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
