@@ -302,6 +302,7 @@ func (*setFollowStock) operate(messageToken []string) string {
 		//search user
 		if dbUserExist("userstock", messageToken[2]) {
 			followStock := dbGetFollowStock(messageToken[2]) + messageToken[1] + ","
+			log.print("Followed Stock:" + followStock)
 			dbUpdateUserStockTable(messageToken[2], followStock)
 		} else {
 			dbInsertUserStockTable(messageToken[2], messageToken[1])
