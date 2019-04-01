@@ -149,7 +149,7 @@ func dbStockExist(userid string, stockNumber string) bool {
 		}
 	}
 	followStock = strings.Replace(followStock, ",", " ", -1)
-	stockArray := strings.Split(followStock, " ")
+	stockArray := strings.Fields(followStock)
 	for i := 0; i < len(stockArray); i++ {
 		if stockArray[i] == stockNumber {
 			return true

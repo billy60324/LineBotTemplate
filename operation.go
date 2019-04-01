@@ -265,7 +265,7 @@ func (*getFollowStock) operate(messageToken []string) string {
 	var stockInformation StockInformation
 	followStock := dbGetFollowStock(messageToken[1])
 	followStock = strings.Replace(followStock, ",", " ", -1)
-	stockArray := strings.Split(followStock, " ")
+	stockArray := strings.Fields(followStock)
 	for i := 0; i < len(stockArray); i++ {
 		jsonStockMessage := httpSearchStock(stockArray[i])
 		json.Unmarshal([]byte(jsonStockMessage), &stockInformation)
