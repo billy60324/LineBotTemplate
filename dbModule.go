@@ -114,7 +114,7 @@ func dbUpdateUserStockTable(userid string, stockNumber string) {
 	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	defer db.Close()
 	checkErr(err)
-	result, err := db.Exec("UPDATE userstock SET followstock='$1' WHERE userid='$2'", userid, stockNumber)
+	result, err := db.Exec("UPDATE userstock SET followstock= $1 WHERE userid= $2", userid, stockNumber)
 	log.Print(result)
 	checkErr(err)
 }
