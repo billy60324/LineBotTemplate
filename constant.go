@@ -24,6 +24,7 @@ var OpCodeDefine = []OperationCodeInfo{
 	{opCode: 6, keyword: "#", complete: true},
 	{opCode: 7, keyword: "股票", complete: true},
 	{opCode: 8, keyword: "股票", complete: true},
+	{opCode: 9, keyword: "股票", complete: true},
 	{opCode: 99, keyword: "DB", complete: true}, // ------------------  testing for DB ------------------
 	{opCode: 201, keyword: "484", complete: false},
 	{opCode: 202, keyword: "是不是", complete: false},
@@ -40,6 +41,7 @@ var OpCodeSyntaxDefine = []OpCodeSyntaxInfo{
 	{opCode: 6, location: 0, length: 2},
 	{opCode: 7, location: 0, length: 1},
 	{opCode: 8, location: 0, length: 2},
+	{opCode: 9, location: 0, length: 3},
 	{opCode: 99, location: 0, length: 2},
 	{opCode: 201, location: NoNeed, length: NoNeed},
 	{opCode: 202, location: NoNeed, length: NoNeed},
@@ -65,6 +67,8 @@ const (
 	GetFollowStock = 7
 	// SetFollowStock : set following stock by userID
 	SetFollowStock = 8
+	// DeleteFollowStock : delete following stock by userID
+	DeleteFollowStock = 9
 	// NumberYesNo : random response yes or no
 	NumberYesNo = 201
 	// YesNo : random response yes or no
