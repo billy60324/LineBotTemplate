@@ -262,28 +262,15 @@ type getFollowStock struct {
 
 func (*getFollowStock) operate(messageToken []string) string {
 	response := ""
-	stockNumber := messageToken[1]
-	url := "http://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_$1.tw&json=1&delay=0"
-	url = strings.Replace(url, "$1", stockNumber, 1)
-	resp, error := http.Get(url)
-	if error != nil {
-		log.Print(error)
-	}
-
-	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
-	apiResponse := string(body)
-	log.Print(apiResponse)
-	jsonStockMessage := apiResponse[strings.Index(apiResponse, "[")+1 : strings.Index(apiResponse, "]")]
-	log.Print(jsonStockMessage)
-	if jsonStockMessage == "" {
-		response = "找不到股票資訊"
-		log.Print("JSON Format is wrong!")
-	} else {
-		var stockInformation StockInformation
+	var stockInformation StockInformation
+	followStock := dbGetFollowStock(messageToken[1])
+	followStock = strings.Replace(followStock, ",", " ", -1)
+	stockArray := strings.Split(followStock, " ")
+	for i := 0; i < len(stockArray); i++ {
+		jsonStockMessage := httpSearchStock(stockArray[i])
 		json.Unmarshal([]byte(jsonStockMessage), &stockInformation)
 		log.Print(stockInformation)
-		response = "***" + stockInformation.N + "***\n時間:" + stockInformation.T + "\n當盤成交價:" + stockInformation.Z + "\n今日最高:" + stockInformation.H + "\n今日最低:" + stockInformation.L + "\n開盤價:" + stockInformation.O + "\n昨收價:" + stockInformation.Y
+		response += "\n\n***" + stockInformation.N + "***\n時間:" + stockInformation.T + "\n當盤成交價:" + stockInformation.Z + "\n今日最高:" + stockInformation.H + "\n今日最低:" + stockInformation.L + "\n開盤價:" + stockInformation.O + "\n昨收價:" + stockInformation.Y
 	}
 	return response
 }
