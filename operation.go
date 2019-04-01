@@ -72,7 +72,7 @@ func botResponse(profile *linebot.UserProfileResponse, humanRequest string) stri
 			messageToken = []string{messageToken[0], profile.UserID}
 		} else if operationCode == 8 { // 股票 2867
 			messageToken = []string{messageToken[0], messageToken[1], profile.UserID}
-		} else if operationCode == 8 { // 股票 2867 刪除
+		} else if operationCode == 9 { // 股票 2867 刪除
 			messageToken = []string{messageToken[0], messageToken[1], messageToken[2], profile.UserID}
 		}
 		response = coreOperation(operationCode, messageToken)
@@ -314,8 +314,8 @@ func (*deleteFollowStock) operate(messageToken []string) string {
 	response := ""
 	if messageToken[2] == "刪除" {
 		if dbStockExist(messageToken[3], messageToken[1]) {
-			followStock := strings.Replace(dbGetFollowStock(messageToken[2]), messageToken[1]+",", "", 1)
-			dbUpdateUserStockTable(messageToken[2], followStock)
+			followStock := strings.Replace(dbGetFollowStock(messageToken[3]), messageToken[1]+",", "", 1)
+			dbUpdateUserStockTable(messageToken[3], followStock)
 			response = "已取消追蹤囉!"
 		} else {
 			response = "你根本沒追蹤這個股票R...=="
