@@ -256,7 +256,7 @@ func (*searchStock) operate(messageToken []string) string {
 		var stockInformation StockInformation
 		json.Unmarshal([]byte(jsonStockMessage), &stockInformation)
 		log.Print(stockInformation)
-		response = "***" + stockInformation.N + "***\n時間:" + stockInformation.T + "\n當盤成交價:" + stockInformation.Z + "\n今日最高:" + stockInformation.H + "\n今日最低:" + stockInformation.L + "\n開盤價:" + stockInformation.O + "\n昨收價:" + stockInformation.Y
+		response = "***" + stockInformation.N + "(" + stockInformation.C + ")***\n時間:" + stockInformation.T + "\n當盤成交價:" + stockInformation.Z + "\n今日最高:" + stockInformation.H + "\n今日最低:" + stockInformation.L + "\n開盤價:" + stockInformation.O + "\n昨收價:" + stockInformation.Y
 	}
 	return response
 }
@@ -274,7 +274,7 @@ func (*getFollowStock) operate(messageToken []string) string {
 		jsonStockMessage := httpSearchStock(stockArray[i])
 		json.Unmarshal([]byte(jsonStockMessage), &stockInformation)
 		log.Print(stockInformation)
-		response += "\n\n***" + stockInformation.N + "***\n時間:" + stockInformation.T + "\n當盤成交價:" + stockInformation.Z + "\n今日最高:" + stockInformation.H + "\n今日最低:" + stockInformation.L + "\n開盤價:" + stockInformation.O + "\n昨收價:" + stockInformation.Y
+		response += "\n\n***" + stockInformation.N + "(" + stockInformation.C + ")***\n時間:" + stockInformation.T + "\n當盤成交價:" + stockInformation.Z + "\n今日最高:" + stockInformation.H + "\n今日最低:" + stockInformation.L + "\n開盤價:" + stockInformation.O + "\n昨收價:" + stockInformation.Y
 	}
 	return response
 }

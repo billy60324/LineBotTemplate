@@ -36,5 +36,6 @@ type StockInformation struct {
 	L string `json:"l"`
 	Y string `json:"y"`
 	T string `json:"t"`
+	C string `json:"c"`
 	N string `json:"n"`
 }
