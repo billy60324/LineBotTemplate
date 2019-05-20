@@ -49,7 +49,11 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 		profile, err := bot.GetGroupMemberProfile(event.Source.GroupID, event.Source.UserID).Do()
 		if err != nil {
-			log.Print("無法透過群組取得user資料，改以個人取得")
+			log.Print("無法透過群組取得user資料，改以聊天室模式取得")
+			profile, err = bot.GetRoomMemberProfile(event.Source.GroupID, event.Source.UserID).Do()
+		}
+		if err != nil {
+			log.Print("無法透過群組及聊天室取得user資料，改以個人取得")
 			profile, err = bot.GetProfile(event.Source.UserID).Do()
 			if err != nil {
 				log.Print(err)
